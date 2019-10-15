@@ -1,0 +1,120 @@
+var playLockout = false;
+var gamePlay = false;
+var tileImages = []
+    , tileArray = []
+    , tileFlippedOver = [];
+var cardFlipped = -1;
+var timer;
+var sb = document.getElementById('start');
+var message = document.getElementById('message');
+var score = document.getElementById('score');
+var gameBoard = document.getElementById('gameboard');
+sb.addEventListener('click', startGame);
+
+function startGame() {
+    // hide start button
+    sb.style.display = 'none';
+    message.innerHTML = "Its working" + gamePlay;
+    if (!gamePlay) {
+        gamePlay = true;
+        buildArray();
+        tileArray = tileImages.concat(tileImages);
+        shuffleArray(tileArray);
+        buildBoard();
+    }
+}
+
+function buildBoard(){
+    var html = "";
+    var x = 0;
+    tileArray.forEach(function (ele) {
+        x++;
+        html += '<div class="gameTile">';
+        html += '<img id="cardz' + x + '" src="http://via.placeholder.com/250/000000/ffffff?text=click" onclick="pickCard(' + (x - 1) + ',this)" class="flipImage"></div>';
+    });
+    gameBoard.innerHTML = html;
+}
+
+function pickCard(i, t) {
+    //console.log(event.target);
+
+    if(!playLockout && !isInArr(t.id,tileFlippedOver)) {
+        if (cardFlipped >= 0) {
+        	playLockout = true;
+            cardFlip(i, t);
+            if (checkSrc(tileFlippedOver[tileFlippedOver.length - 1]) == checkSrc(tileFlippedOver[tileFlippedOver.length - 2])) {
+                message.innerHTML = "Match Found";
+                cardFlipped = -1;
+                playLockout = false;
+
+                if(tileFlippedOver.length == tileArray.length) {
+                	gameOver() ;
+                }
+            }
+            else {
+                message.innerHTML = "No Match";
+                timer = setInterval(hideCard, 1000);
+            }
+            //check to see if its a match
+        }
+        else {
+            cardFlipped = i;
+            cardFlip(i, t);
+        }            	
+    }else {
+    	message.innerHTML = "Locked Out";
+    }
+
+
+}
+
+function gameOver () {
+	message.innerHTML = "Game Over";
+	sb.style.display = 'block';
+	gamePlay = false;
+	tileFlippedOver = [];
+	tileImages = [];
+	gameBoard = "";
+
+}
+
+
+function hideCard() {
+	for(var x = 0; x< 2; x++) {
+		var vid = tileFlippedOver.pop();
+		document.getElementById(vid).src='http://via.placeholder.com/250/000000/ffffff?text=click';
+	}
+	clearInterval(timer);
+	cardFlipped = -1;
+	playLockout = false;
+	message.innerHTML = "ClickAgain";
+}
+
+function checkSrc(a) {
+    return document.getElementById(a).src;
+}
+
+function cardFlip(i, t) {
+    t.src = "http://via.placeholder.com/250/ffffff/000000?text=" + tileArray[i];
+    tileFlippedOver.push(t.id);
+}
+
+function buildArray() {
+    for (var x = 1; x < 7; x++) {
+        tileImages.push(x + '.jpg');
+    }
+}
+
+function shuffleArray(array) {
+    for (var x = array.length - 1; x > 0; x--) {
+        var holder = Math.floor(Math.random() * (x + 1));
+        var itemValue = array[x];
+        array[x] = array[holder];
+        array[holder] = itemValue;
+    }
+    return array;
+}
+
+function isInArr(v,arr) {
+	return arr.indexOf(v) >-1;
+}

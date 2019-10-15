@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Weather</title>
+		 {{>styleLink}}
+
+		 <style type="text/css">
+		 	  {{>style_index}}
+		 </style>
+	</head>
+	<body>
+		
+		<div class=container>
+			{{>navbar}}
+		</div>
+		<div class=container>
+			<form>
+				<input placeholder="Location">
+				<button>Seach</button>
+			</form>
+
+			<p id="msg1"></p>
+			<p id="msg2"></p>			
+		</div>
+
+
+
+		<script type="text/javascript">
+			const weatherForm = document.querySelector('form');
+			const search = document.querySelector('input');
+			const msg1 = document.querySelector('#msg1');
+			const msg2 = document.querySelector('#msg2');
+
+
+
+			weatherForm.addEventListener('submit', (evt)=> {
+				evt.preventDefault();
+				const location = search.value;
+				// get data from server 
+				msg1.textContent= 'Loading...';
+				msg2.textContent = '';	
+
+
+				fetch('http://localhost:3000/weather?location='+location).then((res) => {
+					res.json().then( (data) => {
+						if(data.error) {
+							msg1.textContent = data.error;	
+						}else {
+							msg1.textContent=data.location;
+							msg2.textContent=data.summary+',nhiệt độ '+data.temperature+' độ ẩm '+data.humidity;				
+						}
+					});
+				});
+			});		
+
+
+		</script>
+	</body>
+</html>

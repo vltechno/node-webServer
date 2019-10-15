@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <title>Game</title>
+     {{>styleLink}}
+    <style>
+    {{>style_game}}
+    {{>style_index}}
+    </style>
+</head>
+
+<body>
+    <div class=container>{{>navbar}}</div>
+    <div class=container> 
+    <div id="output">Matching Game</div>
+        <div id="wrapper">
+            <div id="start" class="btn">Start</div>
+            <div id="score"></div>
+            <div id="message"></div>
+            <div id="gameboard"></div>
+        </div>        
+    </div>          
+
+    <script>
+    {{>js_game}}
+    </script>
+</body>
+
+</html>
