@@ -1,11 +1,6 @@
 
 // ***************************//
 // ***************************//
-// ***************************//
-// ***************************//
-// ***************************//
-// ***************************//
-// ***************************//
 
 const express = require('express');
 const path = require('path');
@@ -22,6 +17,8 @@ const viewsPath = path.join(__dirname,'../template/views');
 const partialsPath = path.join(__dirname,'../template/partials');
 const cssPath = path.join(__dirname,'../css');
 
+// heroku
+const port_heroku = process.env.PORT || 3000;
 
 app.set('views',viewsPath) ;
 app.set('view engine','hbs') ;
@@ -94,7 +91,6 @@ app.get('*',(req,res)=>{
 // help.html
 
 
-app.listen(3000,()=>{
-
-	console.log('Server is up!@port=3000');
+app.listen(port_heroku,()=>{
+	console.log('Server is up!@port='+port_heroku);
 })
