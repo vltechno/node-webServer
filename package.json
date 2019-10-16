@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "This is my first web",
   "main": "index.js",
+  "engine": {
+		"node": "10.16.3",
+		"npm": "6.9.0"
+	},
   "scripts": {
     "start": "node source/index.js"
   },
@@ -11,7 +15,7 @@
   ],
   "author": "VLTECHNO",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "express": "^4.16.4",
     "hbs": "^4.0.6",
     "path": "^0.12.7",
