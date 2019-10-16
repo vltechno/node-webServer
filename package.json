@@ -4,11 +4,12 @@
   "description": "This is my first web",
   "main": "index.js",
   "engine": {
-		"node": "10.16.3",
-		"npm": "6.9.0"
-	},
+    "node": "10.16.3",
+    "npm": "6.9.0"
+  },
   "scripts": {
-    "start": "node source/index.js"
+    "start": "node source/index.js",
+    "dev": "nodemon source/index.js -e js,hbs"
   },
   "keywords": [
     "Martin"
@@ -20,5 +21,8 @@
     "hbs": "^4.0.6",
     "path": "^0.12.7",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.2.0"
   }
 }
